@@ -1,7 +1,8 @@
 :root {
-    --primary-col: #ffffff;
+    --primary-col: #242424;
     --secondary-col: #f85050;
-    --untyped-text: #7e7e7e;
+    --untyped-text: #3a3a3a;
+    --typed-text: #f8f8f2;
     --wrong: #f83030;
 }
 
@@ -20,4 +21,26 @@ body {
 
 #text {
     overflow-x: hidden;
+    color: var(--untyped-text);
+    position: absolute;
+}
+
+#hidden-type {
+    position: absolute;
+    top: -9999px;
+}
+
+.cursor {
+    color: var(--typed-text);
+    border-bottom: 5px solid var(--typed-text);
+    animation: blink_cursor 0.75s infinite;
+}
+
+@keyframes blink_cursor {
+    0%, 100% {
+        border-color: transparent;
+    }
+    50% {
+        border-color: var(--typed-text);
+    }
 }
