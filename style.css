@@ -45,3 +45,25 @@ body {
         border-color: var(--typed-text);
     }
 }
+
+.test-time {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--secondary-col);
+    font-size: 2em;
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid var(--secondary-col);
+    width: 2.5em;
+    text-align: center;
+}
+
+.activated-time {
+    border: none;
+    font-size: 150px;
+    bottom: 5px;
+}

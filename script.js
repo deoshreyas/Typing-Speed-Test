@@ -62,10 +62,6 @@ document.getElementById("hidden-type").addEventListener("input", function() {
     gen_chunk();
 });
 
-document.addEventListener("keydown", function(e) {
-    document.getElementById("hidden-type").focus();
-});
-
 function scrollLeft() {
     var text_element = document.getElementById("text");
     var screen_width = window.innerWidth;
@@ -87,4 +83,52 @@ function gen_chunk() {
         var new_characters = initTest();
         characters = characters.concat(new_characters);
     }
+}
+
+document.getElementById("time").addEventListener("click", function() {
+    document.getElementById("time").focus();
+});
+
+document.getElementById("text").addEventListener("click", function() {
+    document.getElementById("hidden-type").focus();
+});
+
+document.getElementById("time").addEventListener("input", function() {
+    console.log(1);
+    var val = document.getElementById("time").value;
+    val = parseInt(val);
+    if (isFinite(val)) {
+        if (val < 10 || isNaN(val)) {
+            val = 10;
+        } else if (val > 600) {
+            val = 600;
+        }
+    } else {
+        val = 10;
+    }
+    document.getElementById("time").value = val;
+});
+
+document.addEventListener("keydown", function(event) {
+    if (document.activeElement == document.getElementById("hidden-type")) {
+        startTest();
+    }
+});
+
+var global_time;
+
+function startTest() {
+    var time = document.getElementById("time").value;
+    global_time = time;
+    document.getElementById("time").disabled = true;
+    document.getElementById("time").classList.add("activated-time");
+    var interval = setInterval(function() {
+        time--;
+        document.getElementById("time").value = time;
+    }, global_time);
+    endTest();
+}
+
+function endTest() {
+    console.log(chars_typed / global_time);
 }
