@@ -67,3 +67,10 @@ body {
     font-size: 150px;
     bottom: 5px;
 }
+
+.results {
+    color: var(--secondary-col);
+    font-size: 2em;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1em;
+}

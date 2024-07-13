@@ -42,8 +42,10 @@ document.getElementById("hidden-type").addEventListener("input", function() {
         if (i<text.length) {
             if (text[i] == characters[i]) {
                 spans[i].style.color = "var(--typed-text)";
+                spans[i].classList.remove("wrong-char");
             } else {
                 spans[i].style.color = "var(--wrong)";
+                spans[i].classList.add("wrong-char");
             }
             if (i+1==text.length) {
                 spans[i].classList.add("cursor");
@@ -94,7 +96,6 @@ document.getElementById("text").addEventListener("click", function() {
 });
 
 document.getElementById("time").addEventListener("input", function() {
-    console.log(1);
     var val = document.getElementById("time").value;
     val = parseInt(val);
     if (isFinite(val)) {
@@ -109,26 +110,40 @@ document.getElementById("time").addEventListener("input", function() {
     document.getElementById("time").value = val;
 });
 
+var global_time = 0;
+
+var started = false;
+
 document.addEventListener("keydown", function(event) {
-    if (document.activeElement == document.getElementById("hidden-type")) {
+    if (document.activeElement == document.getElementById("hidden-type") && !started) {
+        global_time = document.getElementById("time").value;
         startTest();
     }
 });
 
-var global_time;
-
 function startTest() {
+    started = true;
     var time = document.getElementById("time").value;
-    global_time = time;
     document.getElementById("time").disabled = true;
     document.getElementById("time").classList.add("activated-time");
     var interval = setInterval(function() {
         time--;
+        if (time <= 0) {
+            clearInterval(interval);
+            endTest();
+        }
         document.getElementById("time").value = time;
-    }, global_time);
-    endTest();
+    }, 1000);
 }
 
 function endTest() {
-    console.log(chars_typed / global_time);
+    document.getElementById("hidden-type").disabled = true;
+    document.getElementById("test-stuff").style.display = "none";
+    document.getElementById("results").style.display = "block";
+    var wrong = document.getElementsByClassName("wrong-char").length;
+    console.log(wrong);
+    console.log(chars_typed);
+    var accuracy = (chars_typed - wrong) / chars_typed * 100;
+    accuracy = accuracy.toFixed(2);
+    document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + "%";
 }
