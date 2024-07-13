@@ -100,7 +100,7 @@ document.getElementById("time").addEventListener("input", function() {
     val = parseInt(val);
     if (isFinite(val)) {
         if (val < 10 || isNaN(val)) {
-            val = 10;
+            val = 5;
         } else if (val > 600) {
             val = 600;
         }
@@ -121,11 +121,17 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+var data;
+var chart;
+
 function startTest() {
     started = true;
     var time = document.getElementById("time").value;
     document.getElementById("time").disabled = true;
     document.getElementById("time").classList.add("activated-time");
+    data = [];
+    initCpsChart();
+    var chars_last_sec = 0;
     var interval = setInterval(function() {
         time--;
         if (time <= 0) {
@@ -133,6 +139,11 @@ function startTest() {
             endTest();
         }
         document.getElementById("time").value = time;
+
+        var chars_this_sec = chars_typed - chars_last_sec;
+        chars_last_sec = chars_typed;
+        data.push(chars_this_sec);
+        updateCpsChart(data);
     }, 1000);
 }
 
@@ -140,10 +151,42 @@ function endTest() {
     document.getElementById("hidden-type").disabled = true;
     document.getElementById("test-stuff").style.display = "none";
     document.getElementById("results").style.display = "block";
+    document.getElementById("results").classList.add("flex");
+    // accuracy
     var wrong = document.getElementsByClassName("wrong-char").length;
-    console.log(wrong);
-    console.log(chars_typed);
     var accuracy = (chars_typed - wrong) / chars_typed * 100;
     accuracy = accuracy.toFixed(2);
     document.getElementById("accuracy").innerHTML = "Accuracy: " + accuracy + "%";
+    // cps 
+    var cps = chars_typed / global_time;
+    cps = cps.toFixed(0);
+    document.getElementById("cps").innerHTML = "Characters Per Second (CPS): " + cps;
+    // wpm
+    var wpm = chars_typed / 5 / global_time * 60;
+    wpm = wpm.toFixed(0);
+    document.getElementById("wpm").innerHTML = "Words Per Minute (WPM): " + wpm;
+}
+
+function initCpsChart() {
+    var ctx = document.getElementById("chart").getContext("2d");
+    chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: [],
+            datasets: [{
+                label: "Characters Per Second (CPS)",
+                data: [],
+                backgroundColor: "#f8f8f2",
+                borderColor: "#f85050",
+                color: "#242424",
+                borderWidth: 2
+            }]
+        }
+    });
+}
+
+function updateCpsChart(data) {
+    chart.data.labels = data.map((_, index) => index + 1);
+    chart.data.datasets[0].data = data; 
+    chart.update();
 }

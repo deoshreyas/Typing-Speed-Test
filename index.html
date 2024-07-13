@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Speed Test | A project by Shreyas Deo</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="test-stuff">
@@ -15,9 +16,12 @@
         <input type="numeric" class="test-time" id="time" min="10" max="600" value="30">
     </div>
     <div class="results" id="results" style="display: none;">
-        <div id="wpm" class="result">Words Per Minute (WPM): 60</div>
-        <div id="cps" class="result">Characters Per Second (CPS): 9</div>
+        <div id="wpm" class="result"></div>
+        <div id="cps" class="result"></div>
         <div id="accuracy" class="result"></div>
+        <div class="chart-container" style="position: relative; height:50vh; width:100vw">
+            <canvas id="chart"></canvas>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

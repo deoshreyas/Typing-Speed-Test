@@ -73,4 +73,8 @@ body {
     font-size: 2em;
     font-family: 'Courier New', Courier, monospace;
     padding: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
