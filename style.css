@@ -45,19 +45,3 @@ body {
         border-color: var(--typed-text);
     }
 }
-
-.test-time {
-    position: absolute;
-    bottom: 2em;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--secondary-col);
-    font-size: 2em;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    border-bottom: 2px solid var(--secondary-col);
-    width: 2.5em;
-    text-align: center;
-}

@@ -3,15 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Speed Test | A project by Shreyas Deo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Configure The Test | A project by HTML</title>
+    <style>
+        :root {
+        --primary-col: #242424;
+        --secondary-col: #f85050;
+        --untyped-text: #3a3a3a;
+        --typed-text: #f8f8f2;
+        --wrong: #f83030;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--primary-col);
+        overflow: hidden;
+    }
+
+    #bg {
+        position: absolute;
+        z-index: -1;
+        font-size: 2em;
+        color: var(--untyped-text);
+    }
+
+    .flex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2px solid var(--secondary-col);
+        padding: 1em;
+        background-color: var(--primary-col);
+    }
+
+    form label {
+        color: var(--typed-text);
+        font-size: 2em;
+    }
+
+    form input, form select {
+        font-size: 1.25em;
+        padding: 0.25em 0.15em;
+        margin: 0.5em 0;
+        outline: none;
+    }
+
+    form select {
+        background-color: transparent;
+        color: var(--typed-text);
+        border: 2px solid var(--secondary-col);
+    }
+
+    form select option {
+        background-color: var(--primary-col);
+    }
+
+    form input {
+        background-color: transparent;
+        color: var(--typed-text);
+        border: 2px solid var(--secondary-col);
+    }
+
+    form button[type="submit"] {
+        background-color: var(--secondary-col);
+        color: var(--typed-text);
+        border: none;
+        padding: 0.15em 1em;
+        font-size: 1.5em;
+        border: 2px solid var(--secondary-col);
+    }
+
+    form button[type="submit"]:hover {
+        background-color: var(--primary-col);
+        color: var(--secondary-col);
+        cursor: pointer;
+    }
+    </style>
 </head>
 <body>
-    <input type="text" id="hidden-type">
-    <div class="test">
-        <div id="text"></div>
+    <div id="bg"></div>
+    <div class="flex">
+        <form class="test-options">
+            <div class="option">
+                <label for="test-time">Time:</label>
+                <input type="numeric" name="test-time" id="test-time">
+            </div>
+            <div class="option">
+                <label for="test-type">Type:</label>
+                <select name="test-type" id="test-type">
+                    <option value="random">Random</option>
+                    <option value="quotes">Quotes</option>
+                </select>
+            </div>
+            <br>
+            <button type="submit">Start Test</button>
+        </form>
     </div>
-    <input type="numeric" class="test-time" id="time" min="10" max="600" value="30">
-    <script src="script.js"></script>
+    <script>
+        var random_inspirational_quotes = [
+            "The only way to do great work is to love what you do.",
+            "The best way to predict the future is to invent it.",
+            "The only limit to our realization of tomorrow will be our doubts of today.",
+            "The only thing we have to fear is fear itself.",
+            "The only source of knowledge is experience.",
+            "The only thing that interferes with my learning is my education.",
+            "The only true wisdom is in knowing you know nothing.",
+            "The only thing necessary for the triumph of evil is for good to do nothing.",
+            "The only thing we know about the future is that it will be different.",
+            "The only thing that you absolutely have to know is the location of the library.",
+            "The only thing that will redeem mankind is cooperation.",
+            "The only thing that makes life possible is permanent, intolerable uncertainty; not knowing what comes next.",
+            "The only thing that will redeem mankind is cooperation."
+        ]
+        for (var i = 0; i < 1000; i++) {
+            var random_quote = random_inspirational_quotes[Math.floor(Math.random() * random_inspirational_quotes.length)];
+            document.getElementById("bg").innerHTML += random_quote;
+        }
+    </script>
 </body>
 </html>

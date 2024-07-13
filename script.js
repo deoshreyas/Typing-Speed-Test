@@ -33,19 +33,9 @@ function initTest() {
 
 var characters = initTest();
 
-var last_cursor_pos = 0;
-
 var chars_typed = 0;
 
-var started_typing = false;
-
 document.getElementById("hidden-type").addEventListener("input", function() {
-    // make time controls editable before the test (before typing)
-    if (!started_typing && document.activeElement==document.getElementById("time")) {
-        return;
-    } else {
-        started_typing = true;
-    }
     var text = this.value.split("");
     var spans = document.getElementById("text").getElementsByTagName("span");
     for (var i = 0; i < characters.length; i++) {
@@ -79,11 +69,9 @@ document.addEventListener("keydown", function(e) {
 function scrollLeft() {
     var text_element = document.getElementById("text");
     var screen_width = window.innerWidth;
-    console.log(screen_width); // remove 
     var cursor_element = document.querySelector(".cursor"); 
     if (cursor_element) {
-        var cursor_position = cursor_element.getBoundingClientRect().left; 
-        console.log(cursor_position); // remove
+        var cursor_position = cursor_element.getBoundingClientRect().left;
         if (cursor_position >= screen_width * 0.25) { 
             var new_left_pos = parseInt(text_element.style.left || '0px', 10) - (screen_width * 0.25);
             text_element.style.left = new_left_pos + "px"; 
@@ -98,17 +86,5 @@ function gen_chunk() {
     if (chars_typed >= total_chars * 0.75) {
         var new_characters = initTest();
         characters = characters.concat(new_characters);
-        console.log("generating", chunk_size,"more words");
     }
 }
-
-document.getElementById("time").addEventListener("input", function() {
-    if (this.value > 0) {
-        if (this.value > 600) {
-            this.value = 600;
-        }
-    } else {
-        this.value = 0;
-    }
-    document.getElementById("time").value = this.value;
-});
